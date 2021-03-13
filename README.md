@@ -10,4 +10,4 @@
 
 ## Reference
  <a name="1">1</a>. Table 1. Inference performance results from Jetson Nano, Raspberry Pi 3, Intel Neural Compute Stick 2, and Google Edge TPU Coral Dev Board, https://developer.nvidia.com/embedded/jetson-nano-dl-inference-benchmarks<br>
- <a name="2">2</a>. ImageNet 1-crop error rates (224x224), https://pytorch.org/vision/stable/models.html#classification
+ <a name="2">2</a>. Image Classification on ImageNet, https://paperswithcode.com/sota/image-classification-on-imagenet
