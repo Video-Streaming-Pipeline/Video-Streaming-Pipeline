@@ -9,7 +9,7 @@
 2. 빠른 네트워크(5G 등)를 이용해서 클라우드 기반 모델이 모바일 기반 모델(MobileNet)만큼 빠른 속도로 서비스를 제공 할 수 있음을 증명한다.
 
 ## 주요일정
-Notion [링크](https://www.notion.so/aff58c9b6b9e42f489443e14fd72606d)
+[Notion 링크](https://www.notion.so/aff58c9b6b9e42f489443e14fd72606d)
 
 ## Reference
  <a name="1">1</a>. Table 1. Inference performance results from Jetson Nano, Raspberry Pi 3, Intel Neural Compute Stick 2, and Google Edge TPU Coral Dev Board, https://developer.nvidia.com/embedded/jetson-nano-dl-inference-benchmarks<br>
