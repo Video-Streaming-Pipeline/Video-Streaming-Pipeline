@@ -10,7 +10,7 @@
 
 ## 구성도
 <p align="center">
-  <img src="https://user-images.githubusercontent.com/30094719/112485716-918a6180-8dbe-11eb-9885-abaee54c2771.png" />
+  <img src="https://user-images.githubusercontent.com/30094719/112486081-e9c16380-8dbe-11eb-8c36-5fb4addd8366.png" />
 </p>
 
 ## 주요일정
