@@ -32,34 +32,34 @@ int main(int argc, char *argv[]){
     return 0;
 }
 
-#include <gst/gst.h>
+// #include <gst/gst.h>
 
-int main(int argc, char * argv[]) {
-    GMainLoop *main_loop;
-    GstElement *pipeline;
-    GstBus *bus;
-    GstMessage *msg;
+// int main(int argc, char * argv[]) {
+//     GMainLoop *main_loop;
+//     GstElement *pipeline;
+//     GstBus *bus;
+//     GstMessage *msg;
 
-    /* Initalize GStreamer */
-    gst_init(&argc, &argv);
+//     /* Initalize GStreamer */
+//     gst_init(&argc, &argv);
 
-    /* Build the pipeline */
-    pipeline = gst_parse_launch("autovideosrc ! videoscale ! video/x-raw, width=224,height=224 ! videoconvert ! x264enc ! queue ! rtph264pay config-interval=1 pt=96 ! udpsink host=127.0.0.1 port=9191", NULL);
+//     /* Build the pipeline */
+//     pipeline = gst_parse_launch("autovideosrc ! videoscale ! video/x-raw, width=224,height=224 ! videoconvert ! x264enc ! queue ! rtph264pay config-interval=1 pt=96 ! udpsink host=127.0.0.1 port=9191", NULL);
 
-    main_loop = g_main_loop_new(NULL, FALSE);
+//     main_loop = g_main_loop_new(NULL, FALSE);
 
-    /* Start playing */
-    gst_element_set_state(pipeline, GST_STATE_PLAYING);
-    g_main_loop_run(main_loop);
-    /* Wait until error or EOS */
-    bus = gst_element_get_bus(pipeline);
-    msg = gst_bus_timed_pop_filtered(bus, GST_CLOCK_TIME_NONE, GST_MESSAGE_ERROR | GST_MESSAGE_EOS);
+//     /* Start playing */
+//     gst_element_set_state(pipeline, GST_STATE_PLAYING);
+//     g_main_loop_run(main_loop);
+//     /* Wait until error or EOS */
+//     bus = gst_element_get_bus(pipeline);
+//     msg = gst_bus_timed_pop_filtered(bus, GST_CLOCK_TIME_NONE, GST_MESSAGE_ERROR | GST_MESSAGE_EOS);
 
-    /* Free resources */
-    if (msg != NULL)
-        gst_message_unref(msg);
-    gst_object_unref(bus);
-    gst_element_set_state(pipeline, GST_STATE_NULL);
-    gst_object_unref(pipeline);
-    return 0;
-}
+//     /* Free resources */
+//     if (msg != NULL)
+//         gst_message_unref(msg);
+//     gst_object_unref(bus);
+//     gst_element_set_state(pipeline, GST_STATE_NULL);
+//     gst_object_unref(pipeline);
+//     return 0;
+// }
