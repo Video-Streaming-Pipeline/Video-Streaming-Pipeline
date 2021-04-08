@@ -2,11 +2,14 @@
 #include "opencv2/highgui.hpp"
 #include "opencv2/imgproc.hpp"
 #include "opencv2/videoio.hpp"
+#include <thread>
 #include <iostream>
 #include <time.h>
 using namespace std;
 using namespace cv;
 void detectAndDisplay(Mat frame);
+int play_origin();
+int play_detection();
 CascadeClassifier face_cascade;
 CascadeClassifier eyes_cascade;
 int main(int argc, const char** argv)
@@ -33,8 +36,13 @@ int main(int argc, const char** argv)
         return -1;
     };
     int camera_device = parser.get<int>("camera");
+    thread t1(play_detection),t2(play_origin);
+    t1.join();
+    t2.join();
+    return 0;
+}
+int play_origin() {
     VideoCapture capture;
-    //-- 2. Read the video stream
     capture.open("https://www.freedesktop.org/software/gstreamer-sdk/data/media/sintel_trailer-480p.webm");
     if (!capture.isOpened())
     {
@@ -50,16 +58,38 @@ int main(int argc, const char** argv)
             break;
         }
         //-- 3. Apply the classifier to the frame
-        //clock_t start = clock();
-        //detectAndDisplay(frame);
-        //printf("inference time: %f\n", (double)(clock() - start));
-        imshow("origin",frame);
+        imshow("origin", frame);
         if (waitKey(10) == 27)
         {
             break; // escape
         }
     }
-    return 0;
+}
+int play_detection() {
+    VideoCapture capture;
+    capture.open("https://www.freedesktop.org/software/gstreamer-sdk/data/media/sintel_trailer-480p.webm");
+    if (!capture.isOpened())
+    {
+        cout << "--(!)Error opening video capture\n";
+        return -1;
+    }
+    Mat frame;
+    while (capture.read(frame))
+    {
+        if (frame.empty())
+        {
+            cout << "--(!) No captured frame -- Break!\n";
+            break;
+        }
+        //-- 3. Apply the classifier to the frame
+        clock_t start = clock();
+        detectAndDisplay(frame);
+        printf("inference time: %f\n", (double)(clock() - start));
+        if (waitKey(10) == 27)
+        {
+            break; // escape
+        }
+    }
 }
 void detectAndDisplay(Mat frame)
 {
