@@ -1,24 +1,35 @@
-from torchbench.image_classification import ImageNet
-from torchvision.models.resnet import resnext101_32x8d
-import torchvision.transforms as transforms
-import PIL
+import time
+import torch
+import torch.nn as nn
+import torchvision.models as models
+from torch.autograd import Variable
 
-# Define the transforms need to convert ImageNet data to expected model input
-normalize = transforms.Normalize(mean=[0.485, 0.456, 0.406], 
-    std=[0.229, 0.224, 0.225])
-input_transform = transforms.Compose([
-    transforms.Resize(256, PIL.Image.BICUBIC),
-    transforms.CenterCrop(224),
-    transforms.ToTensor(),
-    normalize,
-])
+if torch.cuda.is_available():
+    print('Cuda avilable',torch.cuda.get_device_name(0))
+else:
+    print('cuda is not avilable')
+def tput(model, name):
+    print('batchsize: 32')
+    input = torch.rand(32,3,224,224)
+    input = Variable(input)
+    model(input)
+    T = 0
+    for _ in range(5):
+        t1 = time.time()
+        model(input)
+        t2 = time.time()
+        T += (t2-t1)
+    T /= 5
+    print('Forward throughput: %10s : %6.2fms' % (name, T*100))
 
-# Run the benchmark
-ImageNet.benchmark(
-    model=resnext101_32x8d(pretrained=True),
-    paper_model_name='ResNeXt-101-32x8d',
-    paper_arxiv_id='1611.05431',
-    input_transform=input_transform,
-    batch_size=256,
-    num_gpu=1
-)
+if __name__ == '__main__':
+    alexnet = models.alexnet()
+    resnet18 = models.resnet18()
+    resnet50 = models.resnet50()
+    vgg16 = models.vgg16()
+    squeezenet = models.squeezenet1_0()
+    tput(alexnet, 'alexnet')
+    tput(resnet18, 'resnet18')
+    tput(resnet18, 'resnet50')
+    tput(vgg16, 'vgg16')
+    tput(squeezenet, 'squeezenet')
