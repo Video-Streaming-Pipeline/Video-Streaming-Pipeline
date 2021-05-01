@@ -8,3 +8,7 @@ Pytorch를 이용해서 이미지 처리와 관련된 모델들을 GPU 또는 CP
 ```
 pip install torchvision
 ```
+# Usuage
+```
+python benchmark.py
+```
