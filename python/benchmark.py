@@ -12,7 +12,7 @@ def tput(model, name):
     with torch.no_grad():
         batchsize=32
         print(f'batchsize: {batchsize}')
-        input = torch.rand(32,3,224,224)
+        input = torch.rand(batchsize,3,224,224)
         if torch.cuda.is_available():
             input=input.to('cuda')
             model=model.to('cuda')
