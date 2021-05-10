@@ -17,15 +17,15 @@ int main()
     }
 
     cv::VideoWriter writer;
-    const string pipeline = "appsrc ! videoconvert ! x264enc tune=zerolatency ! rtph264pay ! gdppay ! udpsink host=127.0.0.1 port=5000";
+    const string pipeline = "appsrc ! videoconvert ! x264enc tune=zerolatency ! rtph264pay ! udpsink host=192.168.0.10 port=9777";
     writer.open(pipeline, 0, (double)30, cv::Size(224, 224), true);
     
     if (!writer.isOpened()) {
-        printf("=ERR= can't create writer\n");s
+        printf("=ERR= can't create writer\n");
         return -1;
     }
 
-    cv::Mat frame,re_Frame;
+    cv::Mat frame,re_frame;
 
 
     while (true) {
