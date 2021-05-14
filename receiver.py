@@ -18,4 +18,3 @@ while True:
 
 cap.release()
 cv.destroyWindow("Receiver")
-# print(cv.getBuildInformation())
