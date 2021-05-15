@@ -50,7 +50,7 @@ while True:
     for i in range(len(scores)):
         if scores[i] > 0.5:
             img=cv.rectangle(frame,(boxes[i][0],boxes[i][1]),
-            (boxes[i][2],boxes[i][3]),3)
+            (boxes[i][2],boxes[i][3]),(0,255,0),3)
     cv.imshow("Result", img)
     if cv.waitKey(1) == 'r':
         break
