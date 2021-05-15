@@ -46,6 +46,7 @@ while True:
     print('Inference time: %6.2fms' % ( (t2-t1)*100))
     scores=predictions[0]['scores']
     boxes=predictions[0]['boxes']
+    img=frame
     for i in range(len(scores)):
         if scores[i] > 0.5:
             img=cv.rectangle(frame,(boxes[i][0],boxes[i][1]),
