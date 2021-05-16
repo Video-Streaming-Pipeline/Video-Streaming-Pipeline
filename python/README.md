@@ -32,6 +32,7 @@ cap = cv.VideoCapture('https://www.freedesktop.org/software/gstreamer-sdk/data/m
 cap = cv.VideoCapture('udpsrc port=9777 ! application/x-rtp ! rtph264depay ! h264parse ! avdec_h264 ! videoconvert ! appsink', cv.CAP_GSTREAMER)
 ```
 - 라즈베리파이와 연동시 네트워크 에뮬레이터를 통해서 4G 또는 5G의 환경을 조성해서 실행하도록한다.
+- 서버에서 다시 라즈베리파이로 영상을 보내는 경우는 아직 구현되어 있지 않다.
 
 # 목표
 라즈베리파이와 본 과제의 결과를 비교하여 라즈베리파이의 한계를 극복했다는 것을 증명한다.
@@ -40,4 +41,7 @@ cap = cv.VideoCapture('udpsrc port=9777 ! application/x-rtp ! rtph264depay ! h26
 ex.)
 ![image](https://user-images.githubusercontent.com/30094719/118394281-ad073f80-b67e-11eb-87c5-ffd4e8326927.png)
 
-- 본 과제를 통한 결과와 기존 라즈베리파이의 성능 비교 ex) https://youtu.be/P5OGv9pt_Mc?t=16
+- 본 과제를 통한 결과와 기존 라즈베리파이의 성능 비교
+- 수치의 경우 benchmark.py를 사용
+- 영상의 경우 benchmark_with_streaming.py를 사용 
+-   ex) https://youtu.be/P5OGv9pt_Mc?t=16
