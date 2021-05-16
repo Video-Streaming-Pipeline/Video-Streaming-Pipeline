@@ -42,6 +42,5 @@ ex.)
 ![image](https://user-images.githubusercontent.com/30094719/118394281-ad073f80-b67e-11eb-87c5-ffd4e8326927.png)
 
 - 본 과제를 통한 결과와 기존 라즈베리파이의 성능 비교
-- 수치의 경우 benchmark.py를 사용
-- 영상의 경우 benchmark_with_streaming.py를 사용 
--   ex) https://youtu.be/P5OGv9pt_Mc?t=16
+  - 수치의 경우 benchmark.py를 사용
+  - 영상의 경우 benchmark_with_streaming.py를 사용  ex) https://youtu.be/P5OGv9pt_Mc?t=16
