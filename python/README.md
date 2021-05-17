@@ -24,12 +24,19 @@ python benchmark_with_streaming.py
 
 현재
 ```python
+#Line 41
 cap = cv.VideoCapture('https://www.freedesktop.org/software/gstreamer-sdk/data/media/sintel_trailer-480p.webm')
 ```
 
 변경
 ```python
+#Line 42
 cap = cv.VideoCapture('udpsrc port=9777 ! application/x-rtp ! rtph264depay ! h264parse ! avdec_h264 ! videoconvert ! appsink', cv.CAP_GSTREAMER)
+```
+- 처리된 영상을 라즈베리파이에 다시 송신하고 싶다면 아래의 코드에서 ip와 port를 정확히 세팅하고 사전에 ../raspi/raspicamview.py를 실행해야한다.
+```python
+#Line 45
+out = cv.VideoWriter('appsrc ! videoconvert ! x264enc tune=zerolatency ! rtph264pay ! udpsink host=127.0.0.1 port=9777', 0, 30, (224, 224))
 ```
 - 라즈베리파이와 연동시 네트워크 에뮬레이터를 통해서 4G 또는 5G의 환경을 조성해서 실행하도록한다.
 - 서버에서 다시 라즈베리파이로 영상을 보내는 경우는 아직 구현되어 있지 않다.
