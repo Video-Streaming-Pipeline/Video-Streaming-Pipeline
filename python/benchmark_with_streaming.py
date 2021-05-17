@@ -1,3 +1,9 @@
+'''
+Introduction
+
+receive video from Demo_Viedo(default)/gstreamer streaming
+and process object detection and resend to others
+'''
 import time
 import torch
 import torch.nn as nn
@@ -28,8 +34,15 @@ def get_bbox(frame,model):
         frame=torch.FloatTensor(frame)
     return model(frame)
 
+'''
+For receive image, you have to change VideoCapure init
+'''
 #cap = cv.VideoCapture('udpsrc port=9777 ! application/x-rtp ! rtph264depay ! h264parse ! avdec_h264 ! videoconvert ! appsink', cv.CAP_GSTREAMER)
 cap = cv.VideoCapture('https://www.freedesktop.org/software/gstreamer-sdk/data/media/sintel_trailer-480p.webm')
+'''
+For sending image, you have to set ip and port number and run receiver.py at target
+'''
+out = cv.VideoWriter('appsrc ! videoconvert ! x264enc tune=zerolatency ! rtph264pay ! udpsink host=127.0.0.1 port=9777', 0, 30, (224, 224))
 
 if not cap.isOpened():
     print("VideoCapture not opened")
@@ -41,6 +54,7 @@ while True:
         print("empty frame")
         break
     t1 = time.time()
+    #process object detection
     predictions = get_bbox(frame,model)
     t2 = time.time()
     print('Inference time: %6.2fms' % ( (t2-t1)*100))
@@ -51,9 +65,11 @@ while True:
         if scores[i] > 0.5:
             img=cv.rectangle(frame,(int(boxes[i][0]),int(boxes[i][1])),
             (int(boxes[i][2]),int(boxes[i][3])),(0,255,0),3)
-    cv.imshow("Result", img)
-    if cv.waitKey(1) == 'r':
-        break
+          
+    #cv.imshow("Result", img) show image with opencv
+    out.write(img)
+    # if cv.waitKey(1) == 'r':
+    #     break
 
 
 cap.release()
