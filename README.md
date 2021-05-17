@@ -16,6 +16,31 @@
 ## 주요일정
 [Notion 링크](https://www.notion.so/aff58c9b6b9e42f489443e14fd72606d)
 
+# Usage
+```
+python benchmark.py
+```
+- 로컬에서 여러 모델을 실행시 평균 추론시간을 계산 할 수 있다.
+- 기본적으로 CPU를 사용하며 GPU를 사용할 수 있는 환경인 경우 GPU를 사용하여 연산한다.
+
+```
+python benchmark_with_streaming.py
+```
+- 스트리밍을 통해 입력받은 모델에서 객체 탐지를 수행한다. -> 개선된 모델로 추가 예정
+- 스트리밍시 프레임당 추론시간을 출력한다. (평균 추론 시간을 구하고 싶다면 benchmark.py를 사용하도록 한다.)
+- 현재 데모 영상을 사용하고 있으며 라즈베리파이에서 수신하기 위해서는 VideoCapture를 다음과 같이 변경해야한다.
+
+현재
+```python
+cap = cv.VideoCapture('https://www.freedesktop.org/software/gstreamer-sdk/data/media/sintel_trailer-480p.webm')
+```
+
+변경
+```python
+cap = cv.VideoCapture('udpsrc port=9777 ! application/x-rtp ! rtph264depay ! h264parse ! avdec_h264 ! videoconvert ! appsink', cv.CAP_GSTREAMER)
+```
+- 라즈베리파이와 연동시 네트워크 에뮬레이터를 통해서 4G 또는 5G의 환경을 조성해서 실행하도록한다.
+- 서버에서 다시 라즈베리파이로 영상을 보내는 경우는 아직 구현되어 있지 않다.
 
 
 ## Reference
