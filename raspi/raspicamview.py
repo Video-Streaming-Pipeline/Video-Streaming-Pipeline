@@ -5,7 +5,8 @@ from multiprocessing import Process
 from picamera import PiCamera
  
 def sending():
-    cap = cv.VideoCapture(-1, cv.CAP_V4L2)
+    # cap = cv.VideoCapture(-1, cv.CAP_V4L2) # 카메라 모듈에서 영상 받아옴
+    cap = cv.VideoCapture('https://www.freedesktop.org/software/gstreamer-sdk/data/media/sintel_trailer-480p.webm') # 테스트 영상
     out = cv.VideoWriter('appsrc ! videoconvert ! x264enc tune=zerolatency ! rtph264pay ! udpsink host=221.164.144.187 port=9777', 0, 30, (224, 224))
     while True:
         res,frame = cap.read()
