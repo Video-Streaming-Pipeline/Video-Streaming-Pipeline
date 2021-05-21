@@ -9,7 +9,7 @@ cap = cv.VideoCapture(-1, cv.CAP_V4L2)
 - 카메라 모듈에서 영상을 받는다.
 
 ```
-cap = cv.VideoCapture('https://www.freedesktop.org/software/gstreamer-sdk/data/media/sintel_trailer-480p.webm')
+cap = cv.VideoCapture('trailer.mp4')
 ```
-- 테스트용 영상
-- 추후 로컬 파일을 사용할 수 있도록 수정
+- 테스트용 영상(trailer.mp4) 사용
+- 같은 영상을 사용함으로써 변인을 통제한다.
