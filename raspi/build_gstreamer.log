@@ -1,0 +1,5 @@
+W: --force-yes is deprecated, use one of the options starting with --allow instead.
+E: 소스 목록 /etc/apt/sources.list의 4번 줄의 'include' 타입을 알 수 없습니다
+E: 소스 목록을 읽을 수 없습니다.
+E: 소스 목록 /etc/apt/sources.list의 4번 줄의 'include' 타입을 알 수 없습니다
+E: 소스 목록을 읽을 수 없습니다.
