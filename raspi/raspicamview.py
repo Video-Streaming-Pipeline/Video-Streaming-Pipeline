@@ -10,7 +10,7 @@ def sending():
     filepath = "./trailer.mp4"
     cap = cv.VideoCapture('filesrc location={} ! decodebin ! timeoverlay halignment=right valignment=bottom font-desc="Sans,20" ! videoconvert ! appsink'.format(filepath), cv.CAP_GSTREAMER)
     out = cv.VideoWriter('appsrc ! videoconvert ! x264enc tune=zerolatency ! rtph264pay mtu=1316 ! srtsink uri="srt://:9777?mode=listener"', 0, 30, (224, 224))
-    #out = cv.VideoWriter('appsrc ! videoconvert ! x264enc tune=zerolatency ! rtph264pay ! udpsink host=192.168.0.11 port=9777', 0, 30, (224, 224))
+    #out = cv.VideoWriter('appsrc ! videoconvert ! x264enc tune=zerolatency ! rtph264pay ! udpsink host=192.168.0.11 port=9777', 0, 30, (224, 224)) 
     while True:
         res,frame = cap.read()
         if res:
