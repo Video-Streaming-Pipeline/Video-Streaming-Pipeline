@@ -85,7 +85,7 @@ while True:
     #process object detection
     predictions = get_bbox(frame,model)
     t2 = time.time()
-    print('Inference time: %6.2fms' % ( (t2-t1)*100))
+    #print('Inference time: %6.2fms' % ( (t2-t1)*100)) # print each inference time
     avg += (t2-t1)*100
     count += 1
     scores=predictions[0]['scores']
@@ -98,10 +98,10 @@ while True:
         
     cv.imshow("Result", img) #show image with opencv
     out.write(img)
+    if count == 360:
+        print('average : %6.2fms' % (avg / count)) # print average inference time
     if cv.waitKey(1) == 27:
         break
-
-print('average : %6.2fms' % (avg / count))
 
 cap.release()
 cv.destroyWindow("Receiver")
