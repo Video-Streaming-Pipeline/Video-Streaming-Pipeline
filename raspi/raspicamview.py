@@ -37,7 +37,7 @@ def receive(temp_time,received):
         res, frame = cap.read()
         if res:
             with temp_time.get_lock():
-                print('Receive image Latency : ',temp_time.value-time()*100,'ms')
+                print('Receive image Latency : ',(time()-temp_time.value)*100,'ms')
             with received.get_lock():
                 received.value=1
             cv.imshow("Receive img", frame)
