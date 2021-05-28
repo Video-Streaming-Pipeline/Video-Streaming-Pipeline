@@ -2,7 +2,7 @@ import cv2 as cv
 import numpy as np
 import threading
 from multiprocessing import Process
-from picamera import PiCamera
+#from picamera import PiCamera
  
 def sending():
     #cap = cv.VideoCapture(-1, cv.CAP_V4L2) # 카메라 모듈에서 영상 받아옴
