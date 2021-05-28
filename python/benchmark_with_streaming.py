@@ -11,9 +11,33 @@ import torchvision.models as models
 from torch.autograd import Variable
 import cv2 as cv
 import numpy as np
-
-#get pretrained model
-model = models.detection.fasterrcnn_resnet50_fpn(pretrained=True)
+from argparse import ArgumentParser 
+from argparse import RawTextHelpFormatter
+if __name__=='__main__':
+    parser=ArgumentParser(description='receive video, process object detecion and resend result',formatter_class=RawTextHelpFormatter)
+    parser.add_argument('--model','-m',required=True,help='You have to set object detection model with integer(ex -e 1)\n \
+        1: Faster R-CNN ResNet-50 FPN\n \
+        2: Faster R-CNN MobileNetV3-Large FPN\n \
+        3: Faster R-CNN MobileNetV3-Large 320 FPN\n \
+        4: RetinaNet ResNet-50 FPN\n \
+        5: Mask R-CNN ResNet-50 FPN \n')
+    args=parser.parse_args()
+    model_num=int(args.model)
+    #get pretrained model
+    if model_num==1:
+        model = models.detection.fasterrcnn_resnet50_fpn(pretrained=True)
+    elif model_num==2:
+        model = models.detection.fasterrcnn_mobilenet_v3_large_fpn(pretrained=True)
+    elif model_num==3:
+        model=models.fasterrcnn_mobilenet_v3_large_320_fpn(pretrained=True)
+    elif model_num==4:
+        model=models.retinanet_resnet50_fpn(pretrained=True)
+    elif model_num==5:
+        model=models.maskrcnn_resnet50_fpn(pretrained=True)
+    else:
+        print('You set wrong model number')
+        exit()
+    
 #set device
 if torch.cuda.is_available():
     print('Cuda avilable',torch.cuda.get_device_name(0))
@@ -37,12 +61,13 @@ def get_bbox(frame,model):
 '''
 For receive image, you have to change VideoCapure init
 '''
-cap = cv.VideoCapture('udpsrc port=9777 ! application/x-rtp ! rtph264depay ! h264parse ! avdec_h264 ! videoconvert ! appsink', cv.CAP_GSTREAMER)
+#cap = cv.VideoCapture('udpsrc port=9777 ! application/x-rtp ! rtph264depay ! h264parse ! avdec_h264 ! videoconvert ! videoscale ! appsink', cv.CAP_GSTREAMER) #UDP
+cap = cv.VideoCapture('srtsrc uri="srt://192.168.0.14:9777?mode=caller" ! application/x-rtp ! rtph264depay ! h264parse ! avdec_h264 ! videoconvert ! videoscale ! appsink', cv.CAP_GSTREAMER) #SRT
 #cap = cv.VideoCapture('https://www.freedesktop.org/software/gstreamer-sdk/data/media/sintel_trailer-480p.webm')
 '''
 For sending image, you have to set ip and port number and run receiver.py at target
 '''
-out = cv.VideoWriter('appsrc ! videoconvert ! x264enc tune=zerolatency ! rtph264pay ! udpsink host=192.168.0.14 port=9888', 0, 30, (224, 224))
+out = cv.VideoWriter('appsrc ! videoconvert ! x264enc tune=zerolatency ! rtph264pay mtu=1316 ! srtsink uri="srt://:9888?mode=listener"', 0, 30, (224, 224)) #SRT
 
 if not cap.isOpened():
     print("VideoCapture not opened")
