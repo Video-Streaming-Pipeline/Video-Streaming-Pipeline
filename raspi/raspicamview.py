@@ -5,7 +5,6 @@ import threading
 from multiprocessing import Process
 #from picamera import PiCamera
 from multiprocessing import Process,Value
-from picamera import PiCamera
 import time
 
 def sending(temp_time):
