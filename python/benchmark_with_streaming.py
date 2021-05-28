@@ -37,12 +37,13 @@ def get_bbox(frame,model):
 '''
 For receive image, you have to change VideoCapure init
 '''
-cap = cv.VideoCapture('udpsrc port=9777 ! application/x-rtp ! rtph264depay ! h264parse ! avdec_h264 ! videoconvert ! appsink', cv.CAP_GSTREAMER)
+#cap = cv.VideoCapture('udpsrc port=9777 ! application/x-rtp ! rtph264depay ! h264parse ! avdec_h264 ! videoconvert ! videoscale ! appsink', cv.CAP_GSTREAMER) #UDP
+cap = cv.VideoCapture('srtsrc uri="srt://192.168.0.14:9777?mode=caller" ! application/x-rtp ! rtph264depay ! h264parse ! avdec_h264 ! videoconvert ! videoscale ! appsink', cv.CAP_GSTREAMER) #SRT
 #cap = cv.VideoCapture('https://www.freedesktop.org/software/gstreamer-sdk/data/media/sintel_trailer-480p.webm')
 '''
 For sending image, you have to set ip and port number and run receiver.py at target
 '''
-out = cv.VideoWriter('appsrc ! videoconvert ! x264enc tune=zerolatency ! rtph264pay ! udpsink host=192.168.0.14 port=9888', 0, 30, (224, 224))
+out = cv.VideoWriter('appsrc ! videoconvert ! x264enc tune=zerolatency ! rtph264pay mtu=1316 ! srtsink uri="srt://:9888?mode=listener"', 0, 30, (224, 224)) #SRT
 
 if not cap.isOpened():
     print("VideoCapture not opened")
