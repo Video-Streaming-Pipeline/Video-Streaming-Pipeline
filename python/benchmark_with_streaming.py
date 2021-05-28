@@ -73,6 +73,9 @@ if not cap.isOpened():
     print("VideoCapture not opened")
     exit(-1)
 
+avg = 0.0
+count = 0
+
 while True:
     ret, frame = cap.read()
     if not ret:
@@ -83,6 +86,8 @@ while True:
     predictions = get_bbox(frame,model)
     t2 = time.time()
     print('Inference time: %6.2fms' % ( (t2-t1)*100))
+    avg += (t2-t1)*100
+    count += 1
     scores=predictions[0]['scores']
     boxes=predictions[0]['boxes']
     img=frame
@@ -96,6 +101,7 @@ while True:
     if cv.waitKey(1) == 27:
         break
 
+print('average : %6.2fms' % (avg / count))
 
 cap.release()
 cv.destroyWindow("Receiver")
