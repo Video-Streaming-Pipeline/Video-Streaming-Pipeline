@@ -64,12 +64,12 @@ while True:
     for i in range(len(scores)):
         if scores[i] > 0.5:
             img=cv.rectangle(frame,(int(boxes[i][0]),int(boxes[i][1])),
-            (int(boxes[i][2]),int(boxes[i][3])),(0,255,0),3)
+            (int(boxes[i][2]),int(boxes[i][3])),(00),3)
           
-    #cv.imshow("Result", img) show image with opencv
+    cv.imshow("Result", img) #show image with opencv
     out.write(img)
-    # if cv.waitKey(1) == 'r':
-    #     break
+    if cv.waitKey(1) == 'r':
+        break
 
 
 cap.release()
