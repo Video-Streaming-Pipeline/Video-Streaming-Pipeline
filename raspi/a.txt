@@ -1,0 +1,1 @@
+gst-launch-1.0 autovideosrc ! video/x-raw,width=640,height=480 ! videoconvert ! x264enc tune=zerolatency ! rtph264pay ! udpsink host=127.0.0.1 port=9876
