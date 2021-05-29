@@ -42,9 +42,13 @@ def receive(temp_time,received):
         res, frame = cap.read()
         if res:
             with temp_time.get_lock():
+<<<<<<< HEAD
+                print('Receive image Latency : ',(time()-temp_time.value)*100,'ms')
+=======
                 if count > 0 :
                     avg += (time()-temp_time.value) *100
                 #print('Receive image Latency : ',(time()-temp_time.value)*100,'ms')
+>>>>>>> e28998b9b783746a9a353ed7612c96c34ac007e6
             with received.get_lock():
                 received.value=1
             count += 1
