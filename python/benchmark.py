@@ -15,16 +15,16 @@ def tput(model, name):
             print(f'batchsize: {batchsize}')
             input = torch.rand(batchsize,3,224,224)
             if torch.cuda.is_available():
-              input=input.to('cuda')
-              model=model.to('cuda')
+                input=input.to('cuda')
+                model=model.to('cuda')
             model.eval()
             model(input)
             T = 0
             for _ in range(5):
-              t1 = time.time()
-              model(input)
-              t2 = time.time()
-              T += (t2-t1)
+                t1 = time.time()
+                model(input)
+                t2 = time.time()
+                T += (t2-t1)
             T /= 5
             print('Forward throughput: %10s : %6.2fms' % (name, T*100))
         except:

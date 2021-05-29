@@ -29,11 +29,11 @@ if __name__=='__main__':
     elif model_num==2:
         model = models.detection.fasterrcnn_mobilenet_v3_large_fpn(pretrained=True)
     elif model_num==3:
-        model=models.fasterrcnn_mobilenet_v3_large_320_fpn(pretrained=True)
+        model=models.detection.fasterrcnn_mobilenet_v3_large_320_fpn(pretrained=True)
     elif model_num==4:
-        model=models.retinanet_resnet50_fpn(pretrained=True)
+        model=models.detection.retinanet_resnet50_fpn(pretrained=True)
     elif model_num==5:
-        model=models.maskrcnn_resnet50_fpn(pretrained=True)
+        model=models.detection.maskrcnn_resnet50_fpn(pretrained=True)
     else:
         print('You set wrong model number')
         exit()
@@ -73,6 +73,9 @@ if not cap.isOpened():
     print("VideoCapture not opened")
     exit(-1)
 
+avg = 0.0
+count = 0
+
 while True:
     ret, frame = cap.read()
     if not ret:
@@ -82,7 +85,9 @@ while True:
     #process object detection
     predictions = get_bbox(frame,model)
     t2 = time.time()
-    print('Inference time: %6.2fms' % ( (t2-t1)*100))
+    #print('Inference time: %6.2fms' % ( (t2-t1)*100)) # print each inference time
+    avg += (t2-t1)*100
+    count += 1
     scores=predictions[0]['scores']
     boxes=predictions[0]['boxes']
     img=frame
@@ -93,9 +98,10 @@ while True:
         
     cv.imshow("Result", img) #show image with opencv
     out.write(img)
+    if count == 360:
+        print('average : %6.2fms' % (avg / count)) # print average inference time
     if cv.waitKey(1) == 27:
         break
-
 
 cap.release()
 cv.destroyWindow("Receiver")
