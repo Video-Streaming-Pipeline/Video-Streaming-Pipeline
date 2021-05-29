@@ -8,10 +8,7 @@ if torch.cuda.is_available():
     print('Cuda avilable',torch.cuda.get_device_name(0))
 else:
     print('cuda is not avilable')
-
-
 def tput(model, name):
-    avg = 0.0
     with torch.no_grad():
         try:
             batchsize=1
@@ -29,12 +26,9 @@ def tput(model, name):
                 t2 = time.time()
                 T += (t2-t1)
             T /= 5
-            T *= 100
-            avg += T
             print('Forward throughput: %10s : %6.2fms' % (name, T*100))
         except:
             print(f'Forward throughput: {name} is not available')
-    print('average : %6.2f' % avg)
 
 if __name__ == '__main__':
     # print('Torchvision classification models test')

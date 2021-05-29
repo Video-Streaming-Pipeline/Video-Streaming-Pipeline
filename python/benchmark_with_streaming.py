@@ -29,11 +29,11 @@ if __name__=='__main__':
     elif model_num==2:
         model = models.detection.fasterrcnn_mobilenet_v3_large_fpn(pretrained=True)
     elif model_num==3:
-        model=models.fasterrcnn_mobilenet_v3_large_320_fpn(pretrained=True)
+        model=models.detection.fasterrcnn_mobilenet_v3_large_320_fpn(pretrained=True)
     elif model_num==4:
-        model=models.retinanet_resnet50_fpn(pretrained=True)
+        model=models.detection.retinanet_resnet50_fpn(pretrained=True)
     elif model_num==5:
-        model=models.maskrcnn_resnet50_fpn(pretrained=True)
+        model=models.detection.maskrcnn_resnet50_fpn(pretrained=True)
     else:
         print('You set wrong model number')
         exit()
