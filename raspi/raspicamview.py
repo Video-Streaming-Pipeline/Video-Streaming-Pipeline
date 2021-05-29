@@ -42,14 +42,17 @@ def receive(temp_time,received):
         res, frame = cap.read()
         if res:
             with temp_time.get_lock():
-                avg += (time()-temp_time.value) *100
-                print('Receive image Latency : ',(time()-temp_time.value)*100,'ms')
+                if count > 0 :
+                    avg += (time()-temp_time.value) *100
+                #print('Receive image Latency : ',(time()-temp_time.value)*100,'ms')
             with received.get_lock():
                 received.value=1
+            count += 1
             cv.imshow("receive", frame)
+            if count == 360 :
+                print('average : %6.2fms' % (avg / count))
             if cv.waitKey(20) == 27:
                 break
-    print('average : %6.2fms' % (avg / count))
     cap.release()
     cv.destroyWindow("receive")
 
