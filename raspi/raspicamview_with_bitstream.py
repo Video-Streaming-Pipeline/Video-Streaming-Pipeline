@@ -41,7 +41,7 @@ def sending():
 def receive():
     frame_number=0
     ip='192.168.0.11'
-    port=9888
+    port=9778
     with socket.socket(socket.AF_INET,socket.SOCK_STREAM) as clinet_socket:
         clinet_socket.connect((ip,port))
         while True:
