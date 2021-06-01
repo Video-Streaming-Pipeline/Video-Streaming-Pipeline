@@ -52,8 +52,8 @@ def receive():
                 break
             print(f'Receiving Time={time()*100}ms,Frame Number : {frame_number}')
             frame_number+=1
-            data=pickle.loads(data)
-            print(data)
+#             data=pickle.loads(data)
+#             print(data)
             
 
 
