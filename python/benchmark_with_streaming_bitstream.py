@@ -97,7 +97,7 @@ while True:
     data=client_socket.recv(4096)
     if not data:
         break
-    data=pickle.dumps(predictions.numpy())
+    data=pickle.dumps(predictions)
     client_socket.send(data)
     
     #print('Inference time: %6.2fms' % ( (t2-t1)*100)) # print each inference time
