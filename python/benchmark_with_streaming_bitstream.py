@@ -97,25 +97,25 @@ while True:
     data=client_socket.recv(4096)
     if not data:
         break
-    data=pickle.dumps(predictions)
+    data=pickle.dumps(predictions.numpy())
     client_socket.send(data)
     
     #print('Inference time: %6.2fms' % ( (t2-t1)*100)) # print each inference time
-    avg += (t2-t1)*100
-    count += 1
-    scores=predictions[0]['scores']
-    boxes=predictions[0]['boxes']
-    img=frame
-    for i in range(len(scores)):
-        if scores[i] > 0.5:
-            img=cv.rectangle(frame,(int(boxes[i][0]),int(boxes[i][1])),
-            (int(boxes[i][2]),int(boxes[i][3])),(0,255,0),3)
+#     avg += (t2-t1)*100
+#     count += 1
+#     scores=predictions[0]['scores']
+#     boxes=predictions[0]['boxes']
+#     img=frame
+#     for i in range(len(scores)):
+#         if scores[i] > 0.5:
+#             img=cv.rectangle(frame,(int(boxes[i][0]),int(boxes[i][1])),
+#             (int(boxes[i][2]),int(boxes[i][3])),(0,255,0),3)
         
-    cv.imshow("Result", img) #show image with opencv
-    #out.write(img)
+#     cv.imshow("Result", img) #show image with opencv
+#     #out.write(img)
 
-    if count == 360:
-        print('average : %6.2fms' % (avg / count)) # print average inference time
+#     if count == 360:
+#         print('average : %6.2fms' % (avg / count)) # print average inference time
     if cv.waitKey(1) == 27:
         break
 
