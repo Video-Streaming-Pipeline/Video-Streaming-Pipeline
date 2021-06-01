@@ -91,6 +91,15 @@ while True:
     #process object detection
     predictions = get_bbox(frame,model)
     t2 = time.time()
+    '''
+    send predictions with socket
+    '''
+    data=client_socket.recv(4096)
+    if not data:
+        break
+    data=pickle.dump(predictions)
+    client_socket.send(data)
+    
     #print('Inference time: %6.2fms' % ( (t2-t1)*100)) # print each inference time
     avg += (t2-t1)*100
     count += 1
@@ -104,14 +113,6 @@ while True:
         
     cv.imshow("Result", img) #show image with opencv
     #out.write(img)
-    '''
-    send predictions with socket
-    '''
-    data=client_socket.recv(4096)
-    if not data:
-        break
-    data=pickle.dump(predictions)
-    client_socket.send(data)
 
     if count == 360:
         print('average : %6.2fms' % (avg / count)) # print average inference time
